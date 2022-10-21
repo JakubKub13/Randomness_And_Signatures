@@ -1,4 +1,5 @@
 import { ethers } from "hardhat";
+import * as readline from "readline";
 import { NotRandom } from "../typechain-types/NotRandom";
 
 async function blockHashRandomness() {

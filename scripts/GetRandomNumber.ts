@@ -124,7 +124,7 @@ async function blockHashRandomness() {
     });
   }  
 
-tossCoin().catch((error) => {
+  signature().catch((error) => {
     console.error(error);
     process.exitCode = 1;
 });

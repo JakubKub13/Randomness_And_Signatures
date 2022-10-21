@@ -85,7 +85,45 @@ async function blockHashRandomness() {
     });
   }
 
-blockHashRandomness().catch((error) => {
+  async function signature() {
+    const signers = await ethers.getSigners();
+    const signer = signers[0];
+    console.log(
+      `Signing a message with the account of address ${signer.address}`
+    );
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question("Enter a message to be signed:\n", async (answer) => {
+      const signedMessage = await signer.signMessage(answer);
+      console.log(`The signed message is:\n${signedMessage}`);
+      rl.close();
+      testSignature();
+    });
+  }
+  
+  async function testSignature() {
+    console.log("Verifying signature\n");
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question("Enter message signature:\n", (signature) => {
+      rl.question("Enter message:\n", (message) => {
+        const address = ethers.utils.verifyMessage(message, signature);
+        console.log(`This message signature matches with address ${address}`);
+        rl.question("Repeat? [Y/N]:\n", (answer) => {
+          rl.close();
+          if (answer.toLowerCase() === "y") {
+            testSignature();
+          }
+        });
+      });
+    });
+  }  
+
+tossCoin().catch((error) => {
     console.error(error);
     process.exitCode = 1;
 });

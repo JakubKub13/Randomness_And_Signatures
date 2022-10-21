@@ -39,9 +39,9 @@ async function blockHashRandomness() {
   }
   
   async function tossCoin() {
-    const contractFactory = await ethers.getContractFactory("NotQuiteRandom");
+    const contractFactory = await ethers.getContractFactory("NotRandom");
     contractFactory.deploy().then(async (result) => {
-      result.deployed().then(async (contract: NotQuiteRandom) => {
+      result.deployed().then(async (contract: NotRandom) => {
         const currentBlock = await ethers.provider.getBlock("latest");
         const heads = await contract.tossCoin();
         console.log(
